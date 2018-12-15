@@ -1,18 +1,17 @@
 <?php
 
+// TODO: error handling
+
 namespace App\Http\Controllers;
 
 use App\Player;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Controller as BaseController;
 
 class PlayerController extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    // TODO: use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function update(Request $request, $id)
     {
@@ -38,7 +37,7 @@ class PlayerController extends BaseController
 
     public function index(Request $request, $id)
     {
-        // return one or all
+        // TODO: return one or all
         return response(Team::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
@@ -47,7 +46,7 @@ class PlayerController extends BaseController
             Player::findOrFail($id)->delete();
         } 
         catch (Exception $e) {
-            // TODO return error ?
+            // TODO return error
         }
         return response(null, Response::HTTP_OK); 
     }
