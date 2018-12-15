@@ -33,6 +33,7 @@
                 </select>
             </div>
             <div class="card-body">
+                <!-- TODO: could use a bootstrap table vue component -->
                 <ul id="player-list" class="list-group">
                     <li class="list-group-item" 
                         v-for="player in players"
@@ -43,6 +44,7 @@
                                 <span><b>Player Name:</b> {{ player.firstName }} {{ player.lastName }}</span>
                             </div>
                             <div class="edit-player-info d-none">
+                                <!-- TODO: use a bootstrap form control so we can have labels above -->
                                 <input v-model="player.firstName" type="text" >
                                 <input v-model="player.lastName" type="text">
                             </div>

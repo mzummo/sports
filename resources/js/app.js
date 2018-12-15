@@ -38,7 +38,8 @@ Vue.component('modal', require('./components/Modal.vue'));
  */
 
  // TODO: maybe use toastr
- 
+ // TODO: use vuex to store state information
+
 const app = new Vue({
     el: '#application',
     data: {
