@@ -18,11 +18,11 @@
     <div id='app'>
         <div class="card">
             <div class="card-header">
-                <button @click="addTeam()" class="btn btn-info" style="margin:5px">
+                <button @click="onAddTeam()" class="btn btn-info" style="margin:5px">
                     Add Team
                 </button>
                 <div class="spacer">|</div>
-                <button @click="addPlayer()" class="btn btn-dark" style="margin:5px">
+                <button @click="onAddPlayer()" class="btn btn-dark" style="margin:5px">
                     Add Player
                 </button>
                 <select @change="onTeamChange()"
@@ -40,7 +40,7 @@
                         >
                         <div class="d-inline-block">
                             <div class="show-player-info">
-                                <span>{{ player.firstName }} {{ player.lastName }}</span>
+                                <span><b>Player Name:</b> {{ player.firstName }} {{ player.lastName }}</span>
                             </div>
                             <div class="edit-player-info d-none">
                                 <input v-model="player.firstName" type="text" >
@@ -49,7 +49,7 @@
                         </div>
                         <div class="d-inline-block float-right">
                             <button type="button" class="btn btn-primary btn-sm btn-edit "
-                                    @click="onPlayerEdit(player, $event)"
+                                    @click="onPlayerEdit(player, $event, this.index)"
                                     >
                                 edit
                             </button>
@@ -59,7 +59,11 @@
                                 save
                             </button>
                             <div class="spacer">|</div>
-                            <button type="button" class="btn btn-danger btn-sm">delete</button>
+                            <button type="button" class="btn btn-danger btn-sm"
+                                    @click="onPlayerDelete(player, $event)"
+                                    >
+                                delete
+                            </button>
                         </div>
                     </li>
                 </ul>
@@ -87,12 +91,81 @@
                 selectedTeam: ''
             }
         },
+        created: function() {
+            this.getAllTeams();
+        },
         methods: {
-            addTeam: function() {
-                console.log('team');
+            getAllTeams: function() {
+                let _this = this;
+                axios
+                    .get('/team')
+                    .then(function(response) {
+                        _this.teams = response.data;
+                    });
+                    // TODO else toastr error
             },
-            addPlayer: function() {
-                console.log('player');
+            onPlayerDelete: function(player, e) {
+                    let _this = this;
+                    axios
+                        .delete('/player/' + player.id, {})
+                        .then(function(response) {
+                            _this.players.splice(_this.players.indexOf(player), 1);
+                        });
+                        // TODO: alerts success
+            },
+            onAddTeam: function() {
+                // could make a function that takes an object of params to build all this and re-use
+                let _this = this;
+                swal({
+                    title: 'Add Team',
+                    html:
+                        `<input id="swal-input-team-name" class="swal2-input" placeholder="Team Name">`,
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return {
+                            name: document.getElementById('swal-input-team-name').value,
+                        }
+                    }
+                }).then(function({value: formValues}) {
+                    let newTeam = {
+                        name: formValues.name,
+                    }
+                    axios
+                        .post('/team', newTeam)
+                        .then(function(response) {
+                            _this.teams.push(response);
+                        });
+                        // TODO else toastr error
+                });
+            },
+            onAddPlayer: function() {
+                let _this = this;
+                swal({
+                    title: 'Add Player',
+                    html:
+                        `<input id="swal-input-firstName" class="swal2-input" placeholder="First Name">
+                         <input id="swal-input-lastName" class="swal2-input" placeholder="Last Name">`,
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return {
+                            firstName: document.getElementById('swal-input-firstName').value,
+                            lastName: document.getElementById('swal-input-lastName').value
+                        }
+                    }
+                }).then(function({value: formValues}) {
+                    let newPlayer = {
+                        firstName: formValues.firstName,
+                        lastName: formValues.lastName,
+                        'team_id': _this.selectedTeam
+                    }
+                    axios
+                        .post('/player', newPlayer)
+                        .then(function(response) {
+                            _this.players.push(response.data);
+                        });
+                        // TODO only save on success else throw toastr error
+                });
+                // this.$root.showModal = true; // having css issues with this
             },
             onTeamChange: function() {
                 let _this = this;
@@ -103,7 +176,14 @@
                     });
             },
             onPlayerSave: function(player, e) {
-                console.log(player);
+                // could make add and save player one function
+                let _this = this;
+                axios
+                    .post('/player/' + player.id, player)
+                    .then(function(response) {
+                        // there is going to be an issue where we can't revert if save failed
+                    });
+                
                 // there is a better way we could toggle Save/Edit
                 let parent = e.target.parentElement;
                 let $elm = $(parent)
@@ -126,9 +206,7 @@
                     .addClass("d-none")
                 ;       
             },
-            onPlayerEdit: function(player, e) {
-
-                this.$root.showModal = true;
+            onPlayerEdit: function(player, e, index) {
                 let parent = e.target.parentElement;
                 let $elm = $(parent)
                     .closest("li")

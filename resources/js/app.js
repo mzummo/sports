@@ -5,6 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 require('./bootstrap');
 
@@ -36,6 +37,8 @@ Vue.component('modal', require('./components/Modal.vue'));
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ // TODO: maybe use toastr
+ 
 const app = new Vue({
     el: '#application',
     data: {
