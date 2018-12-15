@@ -12,6 +12,7 @@
 * UI changes (top and left hand NAV)
 * more advanced vue features/conditiionals ... pattern
 * move api routes to routes/api.php ... create more complete api structure and full classes with auth checks
+* Frontend/backend valiation
 
 -- left some previous attempt code (unused) and also commented out sections of code (ON PURPOSE)
 
