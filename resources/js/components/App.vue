@@ -79,17 +79,17 @@
         data: function() {
             return {
                 teams: [
-                    { id: 0, name: "team 1" },
-                    { id: 1, name: "team 2" }
+                    // { id: 0, name: "team 1" },
+                    // { id: 1, name: "team 2" }
                 ],
                 players: [
-                    { id: 0, firstName: 'Player 1', lastName: 'L 1' },
-                    { id: 1, firstName: 'Player 2', lastName: 'L 2' }
+                    // { id: 0, firstName: 'Player 1', lastName: 'L 1' },
+                    // { id: 1, firstName: 'Player 2', lastName: 'L 2' }
                 ],
-                items: [
-                    { message: 'Foo' },
-                    { message: 'Bar' }
-                ],
+                // items: [
+                //     { message: 'Foo' },
+                //     { message: 'Bar' }
+                // ],
                 selectedTeam: ''
             }
         },
