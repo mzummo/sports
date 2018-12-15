@@ -142,6 +142,10 @@
             },
             onAddPlayer: function() {
                 let _this = this;
+                if (this.players.length === 0) {
+                    alert("You must add a team first.");
+                    return;
+                }
                 swal({
                     title: 'Add Player',
                     html:
