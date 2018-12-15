@@ -24,9 +24,9 @@ window.axios = axios;
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 // Vue.component('player-list', require('./components/PlayerList.vue'));
 // Vue.component('team-list', require('./components/TeamList.vue'));
+//Vue.component('modal', require('./components/Modal.vue'));
 
 Vue.component('app', require('./components/App.vue'));
-Vue.component('modal', require('./components/Modal.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
@@ -39,6 +39,8 @@ Vue.component('modal', require('./components/Modal.vue'));
 
  // TODO: maybe use toastr
  // TODO: use vuex to store state information
+ // TODO: use vuex to do multi-component communication
+ // TODO: use vuex router for JWT or SESSION AUTH or just do a regular redirect on SESSION AUTH LOGIN (non vue-router)
 
 const app = new Vue({
     el: '#application',

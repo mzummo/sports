@@ -29,7 +29,7 @@
                         v-model="selectedTeam"
                         >
                     <option disabled value="">Select Team</option>
-                    <option v-for="(team, index) in teams" :value="team.id" :key="index">{{ team.name }}</option>
+                    <option v-for="team in teams" :value="team.id" :key="team.id">{{ team.name }}</option>
                 </select>
             </div>
             <div class="card-body">
@@ -135,7 +135,7 @@
                     axios
                         .post('/team', newTeam)
                         .then(function(response) {
-                            _this.teams.push(response);
+                            _this.teams.push(response.data);
                         });
                         // TODO else toastr error
                 });

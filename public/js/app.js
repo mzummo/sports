@@ -17150,6 +17150,7 @@ Vue.component('modal', __webpack_require__(49));
  */
 
 // TODO: maybe use toastr
+// TODO: use vuex to store state information
 
 var app = new Vue({
   el: '#application',
@@ -50759,6 +50760,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50806,7 +50809,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     name: formValues.name
                 };
                 axios.post('/team', newTeam).then(function (response) {
-                    _this.teams.push(response);
+                    _this.teams.push(response.data);
                 });
                 // TODO else toastr error
             });
@@ -50948,10 +50951,10 @@ var render = function() {
               _vm._v("Select Team")
             ]),
             _vm._v(" "),
-            _vm._l(_vm.teams, function(team, index) {
+            _vm._l(_vm.teams, function(team) {
               return _c(
                 "option",
-                { key: index, domProps: { value: team.id } },
+                { key: team.id, domProps: { value: team.id } },
                 [_vm._v(_vm._s(team.name))]
               )
             })
