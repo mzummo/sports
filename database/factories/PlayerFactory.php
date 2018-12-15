@@ -1,7 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Team as Team;
+// use App\Team as Team;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -14,7 +15,7 @@ use App\Team as Team;
 */
 
 $factory->define(App\Player::class, function (Faker $faker) {
-    $team = Team::all()->pluck('id')->toArray();
+    //$team = Team::all()->pluck('id')->toArray();
 
     return [
         'firstName' => $faker->firstName,

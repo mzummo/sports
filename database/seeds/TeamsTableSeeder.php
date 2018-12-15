@@ -11,6 +11,8 @@ class TeamsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $team = factory(App\Team::class, 50)->create()->each(function($t) {
+            $t->players()->saveMany(factory(App\Player::class, 20)->make());
+        });
     }
 }
