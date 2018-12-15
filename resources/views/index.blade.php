@@ -13,29 +13,12 @@
 
     </head>
     <body>
-        <div id="mute"></div>
-        <div id='app' class="container">
+        <div id="application" class="container">
+            <app></app>
 
-            <button @click="addTeam()" class="btn btn-success " style="padding:5px">
-                Add Team
-            </button>
-            <button @click="addPlayer()" class="btn btn-success " style="padding:5px">
-                Add Player
-            </button>
-
-            <player-list v-bind:players="players"></player-list>
-            <team-list v-bind:teams="teams"></team-list>
-
-            <example-component></example-component>
-
-            <ul id="example-1">
-            <li v-for="item in items">
-                @{{ item.message }}
-            </li>
-            </ul>
+            <modal v-if="showModal" @close="showModal = false"></modal>
 
         </div>
-
         <script src="js/app.js"></script>
     </body>
 </html>

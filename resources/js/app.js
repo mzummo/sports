@@ -20,9 +20,12 @@ window.axios = axios;
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('player-list', require('./components/PlayerList.vue'));
-Vue.component('team-list', require('./components/TeamList.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('player-list', require('./components/PlayerList.vue'));
+// Vue.component('team-list', require('./components/TeamList.vue'));
+
+Vue.component('app', require('./components/App.vue'));
+Vue.component('modal', require('./components/Modal.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
@@ -34,28 +37,8 @@ Vue.component('team-list', require('./components/TeamList.vue'));
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#application',
     data: {
-        teams: [
-            { id: 0, name: "team 1" },
-            { id: 1, name: "team 2" }
-        ],
-        players: [
-            { id: 0, firstName: 'Player 1', lastName: 'L 1' },
-            { id: 1, firstName: 'Player 2', lastName: 'L 2' }
-        ],
-        items: [
-            { message: 'Foo' },
-            { message: 'Bar' }
-        ]
-    },
-    methods: {
-        addTeam: function() {
-            console.log('team')
-        },
-        addPlayer: function() {
-            console.log('player')
-        },
-        
-    }
+        showModal: false
+      }
 });
