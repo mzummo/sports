@@ -17,10 +17,10 @@ class CreatePlayersTable extends Migration
             $table->increments('id');
             $table->string('firstName');
             $table->string('lastName');
-            $table->integer('team_id');
+            $table->integer('team_id')->unsigned(); // unsigned fixes foregin key error on migration
             $table->timestamps();
 
-            //$table->foreign('team_id')->references('id')->on('teams');
+            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 

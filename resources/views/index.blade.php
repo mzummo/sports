@@ -16,7 +16,7 @@
         <div id="application" class="container">
             <app></app>
 
-            <modal v-if="showModal" @close="showModal = false"></modal>
+            <!-- <modal v-if="showModal" @close="showModal = false"></modal> PREVIOUS ATTEMPT-->
 
         </div>
         <script src="js/app.js"></script>

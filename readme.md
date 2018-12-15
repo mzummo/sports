@@ -10,6 +10,7 @@
 * could add error handing (ex: failed promise could return toastr message)
 * player-list could be implimented better with say a bootstrap-table component
 * UI changes (top and left hand NAV)
+* more advanced vue features/conditiionals ... pattern
 
 -- left some previous attempt code (unused) and also commented out sections of code (ON PURPOSE)
 
