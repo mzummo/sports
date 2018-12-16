@@ -6,12 +6,14 @@
  */
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import toastr from 'toastr'
 
 require('./bootstrap');
 
 window.Vue = require('vue');
 window.axios = axios;
-
+// window.Swal = sweetalert2;
+window.toastr = toastr;
 
 /**
  * The following block of code may be used to automatically register your

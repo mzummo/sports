@@ -1,6 +1,9 @@
 <style scoped>
     select {
+        position: absolute;
+        right: 10px;
         width: 60%;
+        margin: 10px;
     }
     .card {
         margin-top: 25px;
@@ -52,18 +55,18 @@
                         </div>
                         <div class="d-inline-block float-right">
                             <button v-if="!edit[index]" type="button" class="btn btn-primary btn-sm btn-edit "
-                                    @click="onPlayerEdit(player, $event)"
+                                    @click="onPlayerEdit(player, $event, index)"
                                     >
                                 edit
                             </button>
                             <button v-else type="button" class="btn btn-primary btn-sm btn-save"
-                                    @click="onPlayerSave(player, $event)"
+                                    @click="onPlayerSave(player, $event, index)"
                                     >
                                 save
                             </button>
                             <div class="spacer">|</div>
                             <button type="button" class="btn btn-danger btn-sm"
-                                    @click="onPlayerDelete(player, $event)"
+                                    @click="onPlayerDelete(player, $event, index)"
                                     >
                                 delete
                             </button>
@@ -111,8 +114,12 @@
                     .get('/api/team')
                     .then(function(response) {
                         _this.teams = response.data;
-                    });
-                    // TODO else toastr error
+                    })
+                    .catch(function(error) {
+                        console.log("error");
+                        toastr.error('Team list couldn\'t be retrieved.', 'Error!');
+                    })
+                ;
             },
             onPlayerDelete: function(player, e) {
                     let _this = this;
@@ -120,8 +127,12 @@
                         .delete('/api/player/' + player.id, {})
                         .then(function(response) {
                             _this.players.splice(_this.players.indexOf(player), 1);
-                        });
-                        // TODO: alerts success
+                            toastr.info('Played deleted.', 'Success!');
+                        })
+                        .catch(function(error) {
+                            console.log("error");
+                            toastr.error('Player couldn\'t be deleted', 'Error!');
+                        })
             },
             onAddTeam: function() {
                 // could make a function that takes an object of params to build all this and re-use
@@ -144,14 +155,19 @@
                         .post('/api/team', newTeam)
                         .then(function(response) {
                             _this.teams.push(response.data);
-                        });
-                        // TODO else toastr error
+                            toastr.success('Team added.', 'Success!');
+                        })
+                        .catch(function(error) {
+                            console.log("error");
+                            toastr.error('Team couldn\'t be added', 'Error!');
+                        })
+                    ;
                 });
             },
             onAddPlayer: function() {
                 let _this = this;
-                if (this.players.length === 0) {
-                    alert("You must add a team first.");
+                if (this.teams.length === 0) {
+                    toastr.error('You must add a Team first', 'Error!');
                     return;
                 }
                 swal({
@@ -176,8 +192,13 @@
                         .post('/api/player', newPlayer)
                         .then(function(response) {
                             _this.players.push(response.data);
-                        });
-                        // TODO only save on success else throw toastr error
+                            toastr.success('Player added.', 'Success!');
+                        })
+                        .catch(function(error) {
+                            console.log("error");
+                            toastr.error('Player couldn\'t be added.', 'Error!');
+                        })
+                    ;
                 });
             },
             onTeamChange: function() {
@@ -186,7 +207,13 @@
                     .get('/api/team/' + this.selectedTeam + '/players')
                     .then(function(response) {
                         _this.players = response.data;
-                    });
+                        toastr.success('Player list retrieved.', 'Success!');
+                    })
+                    .catch(function(error) {
+                        console.log("error");
+                        toastr.error('Player list couldn\'t be retrieved', 'Error!');
+                    })
+                ;
             },
             onPlayerSave: function(player, event, index) {
                 // could make add and save player one function
@@ -194,11 +221,18 @@
                 axios
                     .post('/api/player/' + player.id, player)
                     .then(function(response) {
+                        toastr.success('Player updated.', 'Success!');
                         // there is going to be an issue where we can't revert if save failed
-                    });     
+                    })
+                    .catch(function(error) {
+                        console.log("error");
+                        toastr.error('Couldn\'t save player information.', 'Error!')
+                    })
+                    .finally(() => { Vue.set(this.edit, index, false); })
+                ;     
             },
             onPlayerEdit: function(player, event, index) {
-                Vue.set(sportsApp.$children[0].edit, index, true);
+                Vue.set(this.edit, index, true);
                 // use this.$refs.nameElement[index]
             }
         }
