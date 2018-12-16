@@ -41,22 +41,22 @@
                         :index="index"
                         >
                         <div class="d-inline-block">
-                            <div class="show-player-info">
+                            <div v-if="!edit[index]" class="show-player-info">
                                 <span><b>Player Name:</b> {{ player.firstName }} {{ player.lastName }}</span>
                             </div>
-                            <div class="edit-player-info d-none">
+                            <div v-else class="edit-player-info">
                                 <!-- TODO: use a bootstrap form control so we can have labels above -->
                                 <input v-model="player.firstName" type="text" >
                                 <input v-model="player.lastName" type="text">
                             </div>
                         </div>
                         <div class="d-inline-block float-right">
-                            <button type="button" class="btn btn-primary btn-sm btn-edit "
-                                    @click="onPlayerEdit(player, $event, index)"
+                            <button v-if="!edit[index]" type="button" class="btn btn-primary btn-sm btn-edit "
+                                    @click="onPlayerEdit(player, $event)"
                                     >
                                 edit
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm btn-save d-none"
+                            <button v-else type="button" class="btn btn-primary btn-sm btn-save"
                                     @click="onPlayerSave(player, $event)"
                                     >
                                 save
@@ -92,17 +92,23 @@
                 //     { message: 'Bar' }
                 // ],
                 selectedTeam: '',
-                showEdit: []
+                edit: {}
             }
         },
         created: function() {
             this.getAllTeams();
         },
         methods: {
+            checkVal: function(val) {
+                if (val) {
+                    return true;
+                }
+                return false;
+            },
             getAllTeams: function() {
                 let _this = this;
                 axios
-                    .get('/team')
+                    .get('/api/team')
                     .then(function(response) {
                         _this.teams = response.data;
                     });
@@ -111,7 +117,7 @@
             onPlayerDelete: function(player, e) {
                     let _this = this;
                     axios
-                        .delete('/player/' + player.id, {})
+                        .delete('/api/player/' + player.id, {})
                         .then(function(response) {
                             _this.players.splice(_this.players.indexOf(player), 1);
                         });
@@ -135,7 +141,7 @@
                         name: formValues.name,
                     }
                     axios
-                        .post('/team', newTeam)
+                        .post('/api/team', newTeam)
                         .then(function(response) {
                             _this.teams.push(response.data);
                         });
@@ -167,77 +173,33 @@
                         'team_id': _this.selectedTeam
                     }
                     axios
-                        .post('/player', newPlayer)
+                        .post('/api/player', newPlayer)
                         .then(function(response) {
                             _this.players.push(response.data);
                         });
                         // TODO only save on success else throw toastr error
                 });
-                // this.$root.showModal = true; // having css issues with this
             },
             onTeamChange: function() {
                 let _this = this;
                 axios
-                    .get('/team/' + this.selectedTeam + '/players')
+                    .get('/api/team/' + this.selectedTeam + '/players')
                     .then(function(response) {
                         _this.players = response.data;
                     });
             },
-            onPlayerSave: function(player, e) {
+            onPlayerSave: function(player, event, index) {
                 // could make add and save player one function
                 let _this = this;
                 axios
-                    .post('/player/' + player.id, player)
+                    .post('/api/player/' + player.id, player)
                     .then(function(response) {
                         // there is going to be an issue where we can't revert if save failed
-                    });
-                
-                // there is a better way we could toggle Save/Edit
-                let parent = e.target.parentElement;
-                let $elm = $(parent)
-                    .closest("li")
-                ;
-                $elm
-                    .find(".show-player-info")
-                    .show()
-                ;
-                $elm
-                    .find(".edit-player-info")
-                    .addClass("d-none")
-                ;
-                $elm
-                    .find(".btn-edit")
-                    .show()
-                ;
-                $elm
-                    .find(".btn-save")
-                    .addClass("d-none")
-                ;       
+                    });     
             },
-            onPlayerEdit: function(player, e, index) {
-                // use this.$refs.nameElement[index]......witht that can do v-show with a function
-                //v-show['showEdit[index]']
-                //alert(index)
-                let parent = e.target.parentElement;
-                let $elm = $(parent)
-                    .closest("li")
-                ;
-                $elm
-                    .find(".show-player-info")
-                    .hide()
-                ;
-                $elm
-                    .find(".edit-player-info")
-                    .removeClass("d-none")
-                ;
-                $elm
-                    .find(".btn-edit")
-                    .hide()
-                ;
-                $elm
-                    .find(".btn-save")
-                    .removeClass("d-none")
-                ;
+            onPlayerEdit: function(player, event, index) {
+                Vue.set(sportsApp.$children[0].edit, index, true);
+                // use this.$refs.nameElement[index]
             }
         }
     }

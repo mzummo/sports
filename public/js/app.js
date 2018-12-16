@@ -16719,7 +16719,7 @@ window.axios = __WEBPACK_IMPORTED_MODULE_0_axios___default.a;
 // Vue.component('team-list', require('./components/TeamList.vue'));
 //Vue.component('modal', require('./components/Modal.vue'));
 
-Vue.component('app', __webpack_require__(40));
+Vue.component('sports-app', __webpack_require__(40));
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
@@ -16735,11 +16735,9 @@ Vue.component('app', __webpack_require__(40));
 // TODO: use vuex to do multi-component communication
 // TODO: use vuex router for JWT or SESSION AUTH or just do a regular redirect on SESSION AUTH LOGIN (non vue-router)
 
-var app = new Vue({
+window.sportsApp = new Vue({
   el: '#application',
-  data: {
-    showModal: false
-  }
+  data: {}
 });
 
 /***/ }),
@@ -50158,7 +50156,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-332fccf4"
+var __vue_scopeId__ = "data-v-153c5f47"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -50169,7 +50167,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/App.vue"
+Component.options.__file = "resources/js/components/SportsApp.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -50178,9 +50176,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-332fccf4", Component.options)
+    hotAPI.createRecord("data-v-153c5f47", Component.options)
   } else {
-    hotAPI.reload("data-v-332fccf4", Component.options)
+    hotAPI.reload("data-v-153c5f47", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50201,13 +50199,13 @@ var content = __webpack_require__(42);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(44)("61eb53c0", content, false, {});
+var update = __webpack_require__(44)("4d98373c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-332fccf4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-332fccf4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue");
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-153c5f47\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SportsApp.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-153c5f47\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SportsApp.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -50225,7 +50223,7 @@ exports = module.exports = __webpack_require__(43)(false);
 
 
 // module
-exports.push([module.i, "\nselect[data-v-332fccf4] {\n    width: 60%;\n}\n.card[data-v-332fccf4] {\n    margin-top: 25px;\n}\n.spacer[data-v-332fccf4] {\n    margin: 2px;\n    display: inline-block;\n}\nbutton[data-v-332fccf4] {\n    display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\nselect[data-v-153c5f47] {\n    width: 60%;\n}\n.card[data-v-153c5f47] {\n    margin-top: 25px;\n}\n.spacer[data-v-153c5f47] {\n    margin: 2px;\n    display: inline-block;\n}\nbutton[data-v-153c5f47] {\n    display: inline-block;\n}\n", ""]);
 
 // exports
 
@@ -50781,23 +50779,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //     { message: 'Foo' },
             //     { message: 'Bar' }
             // ],
-            selectedTeam: ''
+            selectedTeam: '',
+            edit: {}
         };
     },
     created: function created() {
         this.getAllTeams();
     },
     methods: {
+        checkVal: function checkVal(val) {
+            if (val) {
+                return true;
+            }
+            return false;
+        },
         getAllTeams: function getAllTeams() {
             var _this = this;
-            axios.get('/team').then(function (response) {
+            axios.get('/api/team').then(function (response) {
                 _this.teams = response.data;
             });
             // TODO else toastr error
         },
         onPlayerDelete: function onPlayerDelete(player, e) {
             var _this = this;
-            axios.delete('/player/' + player.id, {}).then(function (response) {
+            axios.delete('/api/player/' + player.id, {}).then(function (response) {
                 _this.players.splice(_this.players.indexOf(player), 1);
             });
             // TODO: alerts success
@@ -50820,7 +50825,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var newTeam = {
                     name: formValues.name
                 };
-                axios.post('/team', newTeam).then(function (response) {
+                axios.post('/api/team', newTeam).then(function (response) {
                     _this.teams.push(response.data);
                 });
                 // TODO else toastr error
@@ -50850,42 +50855,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     lastName: formValues.lastName,
                     'team_id': _this.selectedTeam
                 };
-                axios.post('/player', newPlayer).then(function (response) {
+                axios.post('/api/player', newPlayer).then(function (response) {
                     _this.players.push(response.data);
                 });
                 // TODO only save on success else throw toastr error
             });
-            // this.$root.showModal = true; // having css issues with this
         },
         onTeamChange: function onTeamChange() {
             var _this = this;
-            axios.get('/team/' + this.selectedTeam + '/players').then(function (response) {
+            axios.get('/api/team/' + this.selectedTeam + '/players').then(function (response) {
                 _this.players = response.data;
             });
         },
         onPlayerSave: function onPlayerSave(player, e) {
             // could make add and save player one function
             var _this = this;
-            axios.post('/player/' + player.id, player).then(function (response) {
+            axios.post('/api/player/' + player.id, player).then(function (response) {
                 // there is going to be an issue where we can't revert if save failed
             });
-
-            // there is a better way we could toggle Save/Edit
-            var parent = e.target.parentElement;
-            var $elm = $(parent).closest("li");
-            $elm.find(".show-player-info").show();
-            $elm.find(".edit-player-info").addClass("d-none");
-            $elm.find(".btn-edit").show();
-            $elm.find(".btn-save").addClass("d-none");
         },
-        onPlayerEdit: function onPlayerEdit(player, e, index) {
-            alert(index);
-            var parent = e.target.parentElement;
-            var $elm = $(parent).closest("li");
-            $elm.find(".show-player-info").hide();
-            $elm.find(".edit-player-info").removeClass("d-none");
-            $elm.find(".btn-edit").hide();
-            $elm.find(".btn-save").removeClass("d-none");
+        onPlayerEdit: function onPlayerEdit(player, event, index) {
+            this.edit[index] = true;
+            this.set(sportsApp.$children[0].edit, index, true);
+            // use this.$refs.nameElement[index]
         }
     }
 });
@@ -50994,99 +50986,99 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "d-inline-block" }, [
-                  _c("div", { staticClass: "show-player-info" }, [
-                    _c("span", [
-                      _c("b", [_vm._v("Player Name:")]),
-                      _vm._v(
-                        " " +
-                          _vm._s(player.firstName) +
-                          " " +
-                          _vm._s(player.lastName)
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "edit-player-info d-none" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: player.firstName,
-                          expression: "player.firstName"
-                        }
-                      ],
-                      attrs: { type: "text" },
-                      domProps: { value: player.firstName },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                  !_vm.edit[index]
+                    ? _c("div", { staticClass: "show-player-info" }, [
+                        _c("span", [
+                          _c("b", [_vm._v("Player Name:")]),
+                          _vm._v(
+                            " " +
+                              _vm._s(player.firstName) +
+                              " " +
+                              _vm._s(player.lastName)
+                          )
+                        ])
+                      ])
+                    : _c("div", { staticClass: "edit-player-info" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: player.firstName,
+                              expression: "player.firstName"
+                            }
+                          ],
+                          attrs: { type: "text" },
+                          domProps: { value: player.firstName },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(player, "firstName", $event.target.value)
+                            }
                           }
-                          _vm.$set(player, "firstName", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: player.lastName,
-                          expression: "player.lastName"
-                        }
-                      ],
-                      attrs: { type: "text" },
-                      domProps: { value: player.lastName },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: player.lastName,
+                              expression: "player.lastName"
+                            }
+                          ],
+                          attrs: { type: "text" },
+                          domProps: { value: player.lastName },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(player, "lastName", $event.target.value)
+                            }
                           }
-                          _vm.$set(player, "lastName", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
+                        })
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "d-inline-block float-right" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm btn-edit ",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.onPlayerEdit(player, $event, index)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            edit\n                        "
+                  !_vm.edit[index]
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-sm btn-edit ",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.onPlayerEdit(player, $event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            edit\n                        "
+                          )
+                        ]
                       )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm btn-save d-none",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.onPlayerSave(player, $event)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            save\n                        "
-                      )
-                    ]
-                  ),
+                    : _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-sm btn-save",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.onPlayerSave(player, $event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            save\n                        "
+                          )
+                        ]
+                      ),
                   _vm._v(" "),
                   _c("div", { staticClass: "spacer" }, [_vm._v("|")]),
                   _vm._v(" "),
@@ -51123,7 +51115,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-332fccf4", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-153c5f47", module.exports)
   }
 }
 

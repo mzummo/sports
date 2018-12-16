@@ -11,20 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-    return view('index');
-});
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 
 Auth::routes(); // auto add the routes for authentication
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
-# API (adding routes here because I don't want to use JWT or reconfigure API to use session)
+// Route::get('/home', 'HomeController@index')->name('home');
+
+# API
 
 // Route::get('api/team/{id?}', 'TeamController@index');
 // Route::get('api/team/{id}/players', 'TeamController@players');

@@ -26,7 +26,7 @@ window.axios = axios;
 // Vue.component('team-list', require('./components/TeamList.vue'));
 //Vue.component('modal', require('./components/Modal.vue'));
 
-Vue.component('app', require('./components/App.vue'));
+Vue.component('sports-app', require('./components/SportsApp.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
@@ -42,9 +42,8 @@ Vue.component('app', require('./components/App.vue'));
  // TODO: use vuex to do multi-component communication
  // TODO: use vuex router for JWT or SESSION AUTH or just do a regular redirect on SESSION AUTH LOGIN (non vue-router)
 
-const app = new Vue({
+window.sportsApp = new Vue({
     el: '#application',
     data: {
-        showModal: false
-      }
+    }
 });
