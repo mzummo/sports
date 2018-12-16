@@ -11,7 +11,10 @@ use Illuminate\Routing\Controller as BaseController;
 
 class PlayerController extends BaseController
 {
-    // TODO: use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function update(Request $request, $id)
     {

@@ -19,13 +19,17 @@ Route::get('/', function () {
 Route::get('/welcome', function () {
     return view('welcome');
 });
-// Route::resource('team', 'TeamController');
-// Route::resource('player', 'PlayerController');
 
-Route::get('/team/{id?}', 'TeamController@index');
-Route::get('/team/{id?}/players', 'TeamController@players');
-Route::post('/team', 'TeamController@create');
+Auth::routes(); // auto add the routes for authentication
 
-Route::post('/player/{id}', 'PlayerController@update');
-Route::post('/player', 'PlayerController@create');
-Route::delete('/player/{id}', 'PlayerController@delete');
+Route::get('/home', 'HomeController@index')->name('home');
+
+# API (adding routes here because I don't want to use JWT or reconfigure API to use session)
+
+// Route::get('api/team/{id?}', 'TeamController@index');
+// Route::get('api/team/{id}/players', 'TeamController@players');
+// Route::post('api/team', 'TeamController@create');
+
+// Route::post('api/player/{id}', 'PlayerController@update');
+// Route::post('api/player', 'PlayerController@create');
+// Route::delete('api/player/{id}', 'PlayerController@delete');

@@ -5,12 +5,18 @@
 namespace App\Http\Controllers;
 
 use App\Team;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
 class TeamController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware("auth"); // TODO: create own;
+    }
+
     public function update(Request $request, $id)
     {
         $team = Team::findOrFail($id);
@@ -39,6 +45,9 @@ class TeamController extends BaseController
     }
 
     public function players(Request $request, $id = null) {
+        // if (!Auth::check()) {
+        //     return response(null, Response::HTTP_UNAUTHORIZED);
+        // }
         $team = Team::findOrFail($id);
         return response($team->players()->get()->toArray(), Response::HTTP_OK);
     }
