@@ -15,6 +15,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- TODO: move too app.scss -->
     <style>
         body {
             background-image: url("background.jpg");
@@ -43,6 +45,13 @@
 
         .toast-success {
             background-color: #6cb2eb;
+        }
+
+        #application {
+            opacity: 0.8;
+            top: 120px;
+            position: absolute;
+            margin-bottom: 50px;
         }
     </style>
 </head>
