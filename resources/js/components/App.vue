@@ -36,8 +36,9 @@
                 <!-- TODO: could use a bootstrap table vue component -->
                 <ul id="player-list" class="list-group">
                     <li class="list-group-item" 
-                        v-for="player in players"
+                        v-for="(player, index) in players"
                         :key="player.id"
+                        :index="index"
                         >
                         <div class="d-inline-block">
                             <div class="show-player-info">
@@ -51,7 +52,7 @@
                         </div>
                         <div class="d-inline-block float-right">
                             <button type="button" class="btn btn-primary btn-sm btn-edit "
-                                    @click="onPlayerEdit(player, $event, this.index)"
+                                    @click="onPlayerEdit(player, $event, index)"
                                     >
                                 edit
                             </button>
@@ -90,7 +91,8 @@
                 //     { message: 'Foo' },
                 //     { message: 'Bar' }
                 // ],
-                selectedTeam: ''
+                selectedTeam: '',
+                showEdit: []
             }
         },
         created: function() {
@@ -213,6 +215,9 @@
                 ;       
             },
             onPlayerEdit: function(player, e, index) {
+                // use this.$refs.nameElement[index]......witht that can do v-show with a function
+                //v-show['showEdit[index]']
+                //alert(index)
                 let parent = e.target.parentElement;
                 let $elm = $(parent)
                     .closest("li")

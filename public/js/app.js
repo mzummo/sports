@@ -50764,6 +50764,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50878,6 +50879,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $elm.find(".btn-save").addClass("d-none");
         },
         onPlayerEdit: function onPlayerEdit(player, e, index) {
+            alert(index);
             var parent = e.target.parentElement;
             var $elm = $(parent).closest("li");
             $elm.find(".show-player-info").hide();
@@ -50982,10 +50984,14 @@ var render = function() {
         _c(
           "ul",
           { staticClass: "list-group", attrs: { id: "player-list" } },
-          _vm._l(_vm.players, function(player) {
+          _vm._l(_vm.players, function(player, index) {
             return _c(
               "li",
-              { key: player.id, staticClass: "list-group-item" },
+              {
+                key: player.id,
+                staticClass: "list-group-item",
+                attrs: { index: index }
+              },
               [
                 _c("div", { staticClass: "d-inline-block" }, [
                   _c("div", { staticClass: "show-player-info" }, [
@@ -51053,7 +51059,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          _vm.onPlayerEdit(player, $event, this.index)
+                          _vm.onPlayerEdit(player, $event, index)
                         }
                       }
                     },
