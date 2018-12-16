@@ -51281,6 +51281,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         this.getAllTeams();
     },
+    computed: {
+        showCard: function showCard() {
+            return this.selectedTeam !== '' && this.players.length > 0;
+        }
+    },
     methods: {
         checkVal: function checkVal(val) {
             if (val) {
@@ -51489,140 +51494,150 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c(
-          "ul",
-          { staticClass: "list-group", attrs: { id: "player-list" } },
-          _vm._l(_vm.players, function(player, index) {
-            return _c(
-              "li",
-              {
-                key: player.id,
-                staticClass: "list-group-item",
-                attrs: { index: index }
-              },
-              [
-                _c("div", { staticClass: "d-inline-block" }, [
-                  !_vm.edit[index]
-                    ? _c("div", { staticClass: "show-player-info" }, [
-                        _c("span", [
-                          _c("b", [_vm._v("Player Name:")]),
-                          _vm._v(
-                            " " +
-                              _vm._s(player.firstName) +
-                              " " +
-                              _vm._s(player.lastName)
+      _vm.showCard
+        ? _c("div", { staticClass: "card-body" }, [
+            _c(
+              "ul",
+              { staticClass: "list-group", attrs: { id: "player-list" } },
+              _vm._l(_vm.players, function(player, index) {
+                return _c(
+                  "li",
+                  {
+                    key: player.id,
+                    staticClass: "list-group-item",
+                    attrs: { index: index }
+                  },
+                  [
+                    _c("div", { staticClass: "d-inline-block" }, [
+                      !_vm.edit[index]
+                        ? _c("div", { staticClass: "show-player-info" }, [
+                            _c("span", [
+                              _c("b", [_vm._v("Player Name:")]),
+                              _vm._v(
+                                " " +
+                                  _vm._s(player.firstName) +
+                                  " " +
+                                  _vm._s(player.lastName)
+                              )
+                            ])
+                          ])
+                        : _c("div", { staticClass: "edit-player-info" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: player.firstName,
+                                  expression: "player.firstName"
+                                }
+                              ],
+                              attrs: { type: "text" },
+                              domProps: { value: player.firstName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    player,
+                                    "firstName",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: player.lastName,
+                                  expression: "player.lastName"
+                                }
+                              ],
+                              attrs: { type: "text" },
+                              domProps: { value: player.lastName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    player,
+                                    "lastName",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-inline-block float-right" }, [
+                      !_vm.edit[index]
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary btn-sm btn-edit ",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.onPlayerEdit(player, $event, index)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            edit\n                        "
+                              )
+                            ]
                           )
-                        ])
-                      ])
-                    : _c("div", { staticClass: "edit-player-info" }, [
-                        _c("input", {
-                          directives: [
+                        : _c(
+                            "button",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: player.firstName,
-                              expression: "player.firstName"
-                            }
-                          ],
-                          attrs: { type: "text" },
-                          domProps: { value: player.firstName },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                              staticClass: "btn btn-primary btn-sm btn-save",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.onPlayerSave(player, $event, index)
+                                }
                               }
-                              _vm.$set(player, "firstName", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: player.lastName,
-                              expression: "player.lastName"
-                            }
-                          ],
-                          attrs: { type: "text" },
-                          domProps: { value: player.lastName },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(player, "lastName", $event.target.value)
-                            }
-                          }
-                        })
-                      ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "d-inline-block float-right" }, [
-                  !_vm.edit[index]
-                    ? _c(
+                            },
+                            [
+                              _vm._v(
+                                "\n                            save\n                        "
+                              )
+                            ]
+                          ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "spacer" }, [_vm._v("|")]),
+                      _vm._v(" "),
+                      _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary btn-sm btn-edit ",
+                          staticClass: "btn btn-danger btn-sm",
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              _vm.onPlayerEdit(player, $event, index)
+                              _vm.onPlayerDelete(player, $event, index)
                             }
                           }
                         },
                         [
                           _vm._v(
-                            "\n                            edit\n                        "
+                            "\n                            delete\n                        "
                           )
                         ]
                       )
-                    : _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary btn-sm btn-save",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.onPlayerSave(player, $event, index)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            save\n                        "
-                          )
-                        ]
-                      ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "spacer" }, [_vm._v("|")]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.onPlayerDelete(player, $event, index)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            delete\n                        "
-                      )
-                    ]
-                  )
-                ])
-              ]
+                    ])
+                  ]
+                )
+              }),
+              0
             )
-          }),
-          0
-        )
-      ])
+          ])
+        : _vm._e()
     ])
   ])
 }

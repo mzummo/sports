@@ -35,7 +35,7 @@
                     <option v-for="team in teams" :value="team.id" :key="team.id">{{ team.name }}</option>
                 </select>
             </div>
-            <div class="card-body">
+            <div v-if="showCard" class="card-body">
                 <!-- TODO: could use a bootstrap table vue component -->
                 <ul id="player-list" class="list-group">
                     <li class="list-group-item" 
@@ -100,6 +100,11 @@
         },
         created: function() {
             this.getAllTeams();
+        },
+        computed: {
+            showCard() {
+                return this.selectedTeam !== '' && this.players.length > 0;
+            }
         },
         methods: {
             checkVal: function(val) {

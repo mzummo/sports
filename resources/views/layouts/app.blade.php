@@ -15,6 +15,36 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .py-4 {
+            min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+            min-height: 100vh; /* These two lines are counted as one :-)       */
+
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-laravel {
+            background-color: transparent;
+        }
+        .navbar-light .navbar-nav .nav-link, .navbar-light .navbar-brand {
+            color: white;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-brand:hover {
+            color: #6cb2eb;
+        }
+
+        .toast-success {
+            background-color: #6cb2eb;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
