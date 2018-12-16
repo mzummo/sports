@@ -1,6 +1,6 @@
 <?php
 
-// TODO: error handling
+// TODO: error handling / validation
 
 namespace App\Http\Controllers;
 
