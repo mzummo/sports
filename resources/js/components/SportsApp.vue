@@ -127,17 +127,17 @@
                 ;
             },
             onPlayerDelete: function(player, e) {
-                    let _this = this;
-                    axios
-                        .delete('/api/player/' + player.id, {})
-                        .then(function(response) {
-                            _this.players.splice(_this.players.indexOf(player), 1);
-                            toastr.info('Played deleted.', 'Success!');
-                        })
-                        .catch(function(error) {
-                            console.log("error");
-                            toastr.error('Player couldn\'t be deleted', 'Error!');
-                        })
+                let _this = this;
+                axios
+                    .delete('/api/player/' + player.id, {})
+                    .then(function(response) {
+                        _this.players.splice(_this.players.indexOf(player), 1);
+                        toastr.info('Played deleted.', 'Success!');
+                    })
+                    .catch(function(error) {
+                        console.log("error");
+                        toastr.error('Player couldn\'t be deleted', 'Error!');
+                    })
             },
             onAddTeam: function() {
                 // could make a function that takes an object of params to build all this and re-use
