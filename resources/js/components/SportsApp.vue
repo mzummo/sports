@@ -208,16 +208,22 @@
             },
             onTeamChange: function() {
                 let _this = this;
+                $(".card-body").addClass("animated fadeOutLeft");
                 axios
                     .get('/api/team/' + this.selectedTeam + '/players')
                     .then(function(response) {
                         _this.players = response.data;
                         toastr.success('Player list retrieved.', 'Success!');
+                        $(".card-body")
+                            .removeClass("fadeOutLeft")
+                            .addClass("fadeInRight")
+                        ;
                     })
                     .catch(function(error) {
                         console.log("error");
                         toastr.error('Player list couldn\'t be retrieved', 'Error!');
                     })
+                    
                 ;
             },
             onPlayerSave: function(player, event, index) {
