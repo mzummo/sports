@@ -14,3 +14,7 @@
 # npm install
 # npm run dev
 ```
+
+### LOGIN
+username: demo@example.com
+password: secret
