@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8" style="opacity: 0.8;">
-            <div class="card animated bounceIn>
+            <div class="card animated bounceIn">
                 <div class="card-header"><b>{{ __('Login') }}</b></div>
 
                 <div class="card-body">
